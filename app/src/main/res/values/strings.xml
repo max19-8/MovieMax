@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MovieMax</string>
+    <string name="image_movie">image with movie</string>
+    <string name="rating_film_image_desc">image rating in film</string>
+    <string name="top_rating_text_view_text">Top Rating</string>
+    <string name="popular_text_view_text">Popular</string>
+    <string name="refresh_button_text">REFRESH</string>
+    <string name="no_internet_connection_text_view">Please check your internet connection and try again</string>
+    <string name="popular_film_poster_toolbar_image_desc">popular_film_poster_toolbar</string>
 </resources>
