@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_margin">16dp</dimen>
+    <dimen name="large_text">32sp</dimen>
+    <dimen name="big_margin">40dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="margin_text_view_no_internet">150dp</dimen>
+    <dimen name="image_view_margin">22dp</dimen>
+    <dimen name="text_view_item_margin">4dp</dimen>
+    <dimen name="text_view_small_margin_item">2dp</dimen>
+</resources>
