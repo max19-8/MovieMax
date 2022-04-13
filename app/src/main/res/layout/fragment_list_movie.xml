@@ -4,12 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/teal_200"
+    android:id="@+id/list_movie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:fitsSystemWindows="true">
@@ -18,7 +20,6 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:visibility="invisible"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/teal_200"
             app:layout_scrollFlags = "exitUntilCollapsed|scroll"
@@ -29,17 +30,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="invisible"
                 tools:src="@drawable/ic_launcher_background"
                 app:layout_collapseMode="parallax"
                 android:contentDescription="@string/popular_film_poster_toolbar_image_desc" />
 
             <TextView
-                android:id="@+id/name_movie"
+                android:id="@+id/movie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/app_margin"
-                android:visibility="invisible"
                 android:layout_gravity="bottom"
                 android:textSize="@dimen/large_text"
                 android:textColor="@color/white"/>
@@ -53,98 +52,11 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/layout_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:id="@+id/constraintLayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/baseRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_anchor="@+id/constraintLayout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_anchorGravity="center">
+            android:background="@drawable/layout_bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <TextView
-                android:id="@+id/popular_movies_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/big_margin"
-                android:layout_marginStart="@dimen/small_margin"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/popular_text_view_text"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_popular_movies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin"
-                android:scrollbars="horizontal"
-                android:orientation="horizontal"
-                android:visibility="invisible"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popular_movies_text_view" />
-
-            <TextView
-                android:id="@+id/top_rating_movies_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginBottom="@dimen/small_margin"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/top_rating_text_view_text"
-                android:visibility="invisible"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_popular_movies" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_top_rating_movies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:visibility="invisible"
-                app:layout_constraintTop_toBottomOf="@id/top_rating_movies_text_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/no_internet_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_text_view_no_internet"
-                android:textStyle="bold"
-                android:visibility="gone"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/no_internet_connection_text_view"/>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/refresh_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/refresh_button_text"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/button_bg"/>
-
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

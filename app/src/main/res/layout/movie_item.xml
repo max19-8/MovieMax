@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="@dimen/small_margin"
-    android:layout_width="116dp"
+    android:layout_width="@dimen/container_wigth_movie_item"
     android:layout_marginHorizontal="@dimen/small_margin"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="116dp"
+        android:layout_width="@dimen/container_wigth_movie_item"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/image_film"
-            android:layout_width="110dp"
-            android:layout_height="160dp"
-            android:contentDescription="@string/image_movie"
-            android:src="@color/black" />
+            android:layout_width="@dimen/movie_item_image_wigth"
+            android:layout_height="@dimen/movie_item_image_height"
+            android:background="@color/grey"
+            android:contentDescription="@string/image_movie" />
 
         <View
-            android:layout_width="42dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/movie_item_view_width"
+            android:layout_height="@dimen/movie_item_view_height"
             android:layout_gravity="end"
             android:background="@drawable/background_rating"/>
 
@@ -32,14 +32,14 @@
             android:layout_gravity="end" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/movie_item_star_dimens"
+            android:layout_height="@dimen/movie_item_star_dimens"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/image_view_margin"
             android:src="@drawable/ic_star_icon"/>
     </FrameLayout>
     <TextView
-        android:id="@+id/name_movie"
+        android:id="@+id/movie_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/text_view_item_margin"

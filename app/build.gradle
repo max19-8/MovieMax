@@ -71,4 +71,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    /*ViewBinding*/
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
+    /*Shimmer*/
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }

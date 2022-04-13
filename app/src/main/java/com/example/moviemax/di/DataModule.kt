@@ -11,6 +11,6 @@ import javax.inject.Singleton
 class DataModule {
     @Provides
     @Singleton
-    fun provideListMovieRepository(movieApi: MovieApi):ListMoviesRepository =
-         ListMoviesRepositoryImpl(movieApi)
+    fun provideListMovieRepository(movieApi: MovieApi): ListMoviesRepository =
+        ListMoviesRepositoryImpl(movieApi)
 }

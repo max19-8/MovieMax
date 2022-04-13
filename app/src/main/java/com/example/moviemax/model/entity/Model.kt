@@ -1,8 +1,14 @@
 package com.example.moviemax.model.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class Model(
+    @SerializedName("page")
     val page: Int,
+    @SerializedName("results")
     val results: List<Result>,
-    val total_pages: Int,
-    val total_results: Int
+    @SerializedName("total_pages")
+    val totalPages: Int,
+    @SerializedName("total_results")
+    val totalResults: Int
 )

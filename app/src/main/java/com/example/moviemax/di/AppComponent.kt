@@ -6,7 +6,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class,DataModule::class,PresenterModule::class])
+@Component(modules = [AppModule::class, DataModule::class, PresenterModule::class])
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(listMovieFragment: ListMovieFragment)

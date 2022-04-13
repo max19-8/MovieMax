@@ -4,6 +4,6 @@ import com.example.moviemax.model.entity.Model
 import io.reactivex.Observable
 
 interface ListMoviesRepository {
-    fun getPopularMovie(): Observable<Model>
-    fun getTopRatingMovies():Observable<Model>
+    fun getPopularMovie(page:Int): Observable<Model>
+    fun getTopRatingMovies(): Observable<Model>
 }

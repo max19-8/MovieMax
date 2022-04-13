@@ -7,4 +7,9 @@
     <string name="refresh_button_text">REFRESH</string>
     <string name="no_internet_connection_text_view">Please check your internet connection and try again</string>
     <string name="popular_film_poster_toolbar_image_desc">popular_film_poster_toolbar</string>
+    <string name="check_network_text_view">check your network connection</string>
+    <string name="no_internet_connection_text">Check your internet connection</string>
+    <string name="service_unavailable_message">Service unavailable</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again_btn">try again</string>
 </resources>

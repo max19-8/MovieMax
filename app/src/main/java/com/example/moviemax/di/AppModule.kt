@@ -2,6 +2,8 @@ package com.example.moviemax.di
 
 import android.content.Context
 import com.example.moviemax.model.api.MovieApi
+import com.example.moviemax.utils.BASE_URL_MOVIE
+import com.example.moviemax.view.provider.ResourceProvider
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -16,7 +18,11 @@ class AppModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun provideContext():Context = context
+    fun provideContext(): Context = context
+
+    @Provides
+    @Singleton
+    fun provideResourceProvider(context: Context): ResourceProvider = ResourceProvider.Base(context)
 
     @Provides
     @Singleton
@@ -26,13 +32,13 @@ class AppModule(val context: Context) {
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.themoviedb.org")
+            .baseUrl(BASE_URL_MOVIE)
             .client(okHttpClient)
             .build()
 
     @Provides
     @Singleton
-     fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
@@ -42,6 +48,6 @@ class AppModule(val context: Context) {
 
     @Provides
     @Singleton
-     fun provideApiService(retrofit: Retrofit): MovieApi =
+    fun provideApiService(retrofit: Retrofit): MovieApi =
         retrofit.create(MovieApi::class.java)
 }

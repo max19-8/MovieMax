@@ -1,6 +1,6 @@
 package com.example.moviemax.presenter
 
 interface ListMoviePresenter {
-    fun getPopularMovie()
-    fun getTopRatingMovie()
+    fun getPopularsAndTopRatingMovies(page:Int)
+    fun clearDispose()
 }

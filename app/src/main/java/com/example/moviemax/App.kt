@@ -5,7 +5,7 @@ import com.example.moviemax.di.AppComponent
 import com.example.moviemax.di.AppModule
 import com.example.moviemax.di.DaggerAppComponent
 
-class App:Application() {
+class App : Application() {
 
     lateinit var appComponent: AppComponent
 

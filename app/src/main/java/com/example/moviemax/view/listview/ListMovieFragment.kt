@@ -5,28 +5,32 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.bumptech.glide.Glide
 import com.example.moviemax.App
-import com.example.moviemax.R
 import com.example.moviemax.databinding.FragmentListMovieBinding
-import com.example.moviemax.model.entity.Model
+import com.example.moviemax.model.entity.DataModel
 import com.example.moviemax.model.entity.Result
 import com.example.moviemax.presenter.ListMoviePresenterImpl
-import com.example.moviemax.view.adapter.MovieAdapter
-import com.google.android.material.snackbar.Snackbar
+import com.example.moviemax.utils.URL_ORIGINAL_IMAGE
+import com.example.moviemax.utils.showImage
+import com.example.moviemax.view.adapter.adapterdata.DataAdapter
 import javax.inject.Inject
 
 class ListMovieFragment : MvpAppCompatFragment(), ListView {
-
-    private var _binding: FragmentListMovieBinding? = null
-    private val binding get() = _binding!!
-
+    private var page = 1
+    private val binding:FragmentListMovieBinding by viewBinding(CreateMethod.INFLATE)
+  private  val dataAdapter = DataAdapter(object :DataAdapter.Retry{
+        override fun tryAgain() {
+            presenter.getPopularsAndTopRatingMovies(page)
+        }
+    })
     @Inject
     @InjectPresenter
     lateinit var presenter: ListMoviePresenterImpl
@@ -37,81 +41,31 @@ class ListMovieFragment : MvpAppCompatFragment(), ListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         (context?.applicationContext as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        presenter.getPopularMovie()
-        presenter.getTopRatingMovie()
+        presenter.getPopularsAndTopRatingMovies(page)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentListMovieBinding.bind(
-            inflater.inflate(
-                R.layout.fragment_list_movie,
-                container,
-                false
-            )
-        )
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = binding.root
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.clearDispose()
     }
 
-    override fun showPopularMovies(items: Model) {
-        val popularMoviesAdapter = MovieAdapter()
-        val recyclerPopularMovies = binding.recyclerPopularMovies
-        recyclerPopularMovies.adapter = popularMoviesAdapter
-        popularMoviesAdapter.submitList(items.results)
+    override fun setBaseRecyclerView(list: List<DataModel>) {
+         with(binding){
+             baseRecyclerView.layoutManager =LinearLayoutManager(requireContext(),  LinearLayoutManager.VERTICAL, false)
+             baseRecyclerView.adapter = dataAdapter
+             dataAdapter.addData(list)
+             Log.d("setBaseRecyclerView","$list")
+         }
     }
 
-    override fun showTopRatingMovies(items: Model) {
-        val topRatingMoviesAdapter = MovieAdapter()
-        val recyclerViewTopRatingMovies = binding.recyclerTopRatingMovies
-        recyclerViewTopRatingMovies.layoutManager = GridLayoutManager(requireContext(), 3)
-        recyclerViewTopRatingMovies.adapter = topRatingMoviesAdapter
-        topRatingMoviesAdapter.submitList(items.results)
+    override fun addContentToToolbar(item: Result) {
+                 binding.appbar.isVisible = true
+           with(binding){
+               showImage(requireContext(),URL_ORIGINAL_IMAGE + item.backdropPath,toolbarImage)
+               movieName.text = item.name
+           }
     }
 
-    override fun setContentFromToolbar(item: Result) {
-        Glide.with(requireContext())
-            .load("https://image.tmdb.org/t/p/original" + item.backdrop_path)
-            .into(binding.toolbarImage)
-        binding.nameMovie.text = item.title
-    }
 
-    override fun onDataErrorFromApi(throwable: Throwable) {
-        with(binding) {
-            popularMoviesTextView.isVisible = false
-            topRatingMoviesTextView.isVisible = false
-            collapsingToolbar.isVisible = false
-            appbar.isVisible = false
-            refreshButton.isVisible = true
-            noInternetTextView.isVisible = true
-            recyclerPopularMovies.isVisible = false
-            recyclerTopRatingMovies.isVisible = false
-            toolbarImage.isVisible = false
-            nameMovie.isVisible = false
-            Snackbar.make(binding.root, "check your network connection", Snackbar.LENGTH_LONG)
-                .show()
-            refreshButton.setOnClickListener {
-                presenter.getPopularMovie()
-                presenter.getTopRatingMovie()
-            }
-        }
-    }
-
-    override fun showContent() {
-        with(binding) {
-            popularMoviesTextView.isVisible = true
-            topRatingMoviesTextView.isVisible = true
-            collapsingToolbar.isVisible = true
-            appbar.isVisible = true
-            recyclerPopularMovies.isVisible = true
-            recyclerTopRatingMovies.isVisible = true
-            toolbarImage.isVisible = true
-            refreshButton.isVisible = false
-            noInternetTextView.isVisible = false
-            appbar.isVisible = true
-            nameMovie.isVisible = true
-        }
-    }
 }

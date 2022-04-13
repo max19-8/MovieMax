@@ -8,4 +8,11 @@
     <dimen name="image_view_margin">22dp</dimen>
     <dimen name="text_view_item_margin">4dp</dimen>
     <dimen name="text_view_small_margin_item">2dp</dimen>
+    <dimen name="container_wigth_movie_item">116dp</dimen>
+    <dimen name="movie_item_image_wigth">110dp</dimen>
+    <dimen name="movie_item_image_height">160dp</dimen>
+    <dimen name="movie_item_star_dimens">20dp</dimen>
+    <dimen name="movie_item_view_width">42dp</dimen>
+    <dimen name="movie_item_view_height">20dp</dimen>
+    <dimen name="text_margin_view_pager_item">24dp</dimen>
 </resources>
