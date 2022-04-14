@@ -8,7 +8,7 @@ import com.example.moviemax.model.entity.DataModel
 import com.example.moviemax.model.entity.MovieTypes
 import com.example.moviemax.view.adapter.base.BaseDataHolder
 
-class DataAdapter(private val retry: Retry) : RecyclerView.Adapter<BaseDataHolder<*>>() {
+class DataAdapter(private val retry: Retry,private val paging: Paging) : RecyclerView.Adapter<BaseDataHolder<*>>() {
 
   private  var listResult: List<DataModel> = ArrayList()
 
@@ -17,7 +17,7 @@ class DataAdapter(private val retry: Retry) : RecyclerView.Adapter<BaseDataHolde
       return  when(viewType){
             MovieTypes.TYPE_POPULAR_MOVIES.ordinal -> {
              val  binding = ViewholderVerticalBinding.inflate(inflater, parent, false)
-                PopularMovieViewHolder(binding)
+                PopularMovieViewHolder(binding,paging)
             }
           MovieTypes.TYPE_TOP_RATING_MOVIES.ordinal-> {
                 val binding = ViewholderHorizontalBinding.inflate(inflater, parent, false)

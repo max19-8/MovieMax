@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/MegaUser/AndroidStudioProjects/MovieMax/app/src/main/res/layout/fragment_list_movie.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/MegaUser/AndroidStudioProjects/MovieMax/app/src/main/res/layout/movie_horizontal_item.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/MegaUser/AndroidStudioProjects/MovieMax/app/src/main/res/layout/viewholder_horizontal.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/MegaUser/AndroidStudioProjects/MovieMax/app/src/main/res/layout/viewholder_vertical.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MovieMax/app/src/main/res/drawable-v24/background_rating.xml" value="0.202" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MovieMax/app/src/main/res/drawable-v24/layout_bg.xml" value="0.202" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MovieMax/app/src/main/res/drawable/background_rating.xml" value="0.202" />

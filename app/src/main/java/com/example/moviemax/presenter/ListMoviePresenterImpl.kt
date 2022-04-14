@@ -26,7 +26,7 @@ class ListMoviePresenterImpl(
     private var disposable: Disposable? = null
 
     override fun getPopularsAndTopRatingMovies(page:Int) {
-        viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
+      //  viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
         disposable = Observable.zip<Model, Model, Pair<Model, Model>>(
             listMoviesRepository.getTopRatingMovies(),
             listMoviesRepository.getPopularMovie(page)
@@ -41,7 +41,7 @@ class ListMoviePresenterImpl(
                         DataModel.HEADER((resourceProvider.getString(R.string.top_rating_text_view_text))),
                         DataModel.HorizontalItems(it.first.results.toMovie()),
                         DataModel.HEADER((resourceProvider.getString(R.string.popular_text_view_text))),
-                        DataModel.VerticalItems(it.second.results.toMovie())
+                        DataModel.VerticalItems((it.second.results.toMovie()))
                     )
                 )
             }, { error ->
@@ -55,7 +55,8 @@ class ListMoviePresenterImpl(
             })
     }
 
-    fun getPaging(page:Int){
+    fun getPaging(page:Int):List<Movie>{
+        var res = listOfNotNull<Movie>()
         viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
         disposable = Observable.zip<Model, Model, Pair<Model, Model>>(
             listMoviesRepository.getTopRatingMovies(),
@@ -65,6 +66,7 @@ class ListMoviePresenterImpl(
             .observeOn(AndroidSchedulers.mainThread())
             .map { (topRating, mostPopular) -> Pair(topRating, mostPopular) }
             .subscribe({
+                 res = it.second.results.toMovie().toList()
                 viewState.addContentToToolbar(it.second.results.first())
                 viewState.setBaseRecyclerView(
                     listOf(
@@ -83,6 +85,7 @@ class ListMoviePresenterImpl(
                 viewState.setBaseRecyclerView(listOf(DataModel.Error(message)))
                 Log.d("getTopRatingMovies", "$error")
             })
+        return res
     }
 
     override fun clearDispose() {
