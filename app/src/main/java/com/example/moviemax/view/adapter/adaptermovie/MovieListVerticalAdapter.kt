@@ -31,4 +31,5 @@ class MovieListVerticalAdapter : ListAdapter<Movie, BaseMoviesHolder>(BaseDiffCa
             }
         }
     }
+
 }

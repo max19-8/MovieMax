@@ -10,7 +10,6 @@ import com.example.moviemax.model.entity.toMovie
 import com.example.moviemax.model.repository.ListMoviesRepository
 import com.example.moviemax.utils.ErrorType
 import com.example.moviemax.view.listview.ListView
-import com.example.moviemax.view.listview.Movie
 import com.example.moviemax.view.provider.ResourceProvider
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,7 +40,7 @@ class ListMoviePresenterImpl(
                         DataModel.HEADER((resourceProvider.getString(R.string.top_rating_text_view_text))),
                         DataModel.HorizontalItems(it.first.results.toMovie()),
                         DataModel.HEADER((resourceProvider.getString(R.string.popular_text_view_text))),
-                        DataModel.VerticalItems((it.second.results.toMovie()).plus(it.second.results.toMovie()))
+                        DataModel.VerticalItems((it.second.results.toMovie()))
                     )
                 )
             }, { error ->

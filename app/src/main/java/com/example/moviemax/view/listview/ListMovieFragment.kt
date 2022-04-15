@@ -21,16 +21,24 @@ import com.example.moviemax.presenter.ListMoviePresenterImpl
 import com.example.moviemax.utils.URL_ORIGINAL_IMAGE
 import com.example.moviemax.utils.showImage
 import com.example.moviemax.view.adapter.adapterdata.DataAdapter
+import com.example.moviemax.view.adapter.adapterdata.Paging
 import javax.inject.Inject
 
 class ListMovieFragment : MvpAppCompatFragment(), ListView {
-    private var page = 1
+     var page = 1
     private val binding:FragmentListMovieBinding by viewBinding(CreateMethod.INFLATE)
   private  val dataAdapter = DataAdapter(object :DataAdapter.Retry{
         override fun tryAgain() {
             presenter.getPopularsAndTopRatingMovies(page)
         }
-    })
+    },object : Paging{
+      override fun getPage():List<Movie> {
+          ++page
+      val res =  presenter.getPaging(page)
+         return res
+      }
+  })
+
     @Inject
     @InjectPresenter
     lateinit var presenter: ListMoviePresenterImpl
@@ -41,7 +49,7 @@ class ListMovieFragment : MvpAppCompatFragment(), ListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         (context?.applicationContext as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        presenter.getPopularsAndTopRatingMovies(page)
+        presenter.getPopularsAndTopRatingMovies(1)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = binding.root
@@ -56,6 +64,13 @@ class ListMovieFragment : MvpAppCompatFragment(), ListView {
              baseRecyclerView.adapter = dataAdapter
              dataAdapter.addData(list)
              Log.d("setBaseRecyclerView","$list")
+             baseRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                     Log.d("baseRecyclerView","$dx")
+                     Log.d("baseRecyclerView","$dy")
+                     super.onScrolled(recyclerView, dx, dy)
+                 }
+             })
          }
     }
 
