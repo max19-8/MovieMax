@@ -1,14 +1,13 @@
 package com.example.moviemax.view.adapter.adapterdata
 
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviemax.databinding.ViewholderVerticalBinding
 import com.example.moviemax.utils.SPAN_COUNT_RECYCLER_TOP_RATING_MOVIES
 import com.example.moviemax.view.adapter.adaptermovie.MovieListVerticalAdapter
 import com.example.moviemax.view.adapter.base.BaseDataHolder
 import com.example.moviemax.view.listview.Movie
+import io.reactivex.Observable
 
 class PopularMovieViewHolder(private val binding: ViewholderVerticalBinding) :
     BaseDataHolder<List<Movie>>(binding) {
