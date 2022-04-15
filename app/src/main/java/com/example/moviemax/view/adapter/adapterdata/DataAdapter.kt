@@ -7,6 +7,7 @@ import com.example.moviemax.databinding.*
 import com.example.moviemax.model.entity.DataModel
 import com.example.moviemax.model.entity.MovieTypes
 import com.example.moviemax.view.adapter.base.BaseDataHolder
+import java.util.logging.Handler
 
 class DataAdapter(private val retry: Retry,private val paging: Paging) : RecyclerView.Adapter<BaseDataHolder<*>>() {
 

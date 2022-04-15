@@ -19,24 +19,27 @@ class PopularMovieViewHolder(private val binding: ViewholderVerticalBinding,priv
             GridLayoutManager(itemView.context, SPAN_COUNT_RECYCLER_TOP_RATING_MOVIES)
         rvPopularMovies.layoutManager = manager
         adapter.submitList(items)
-
         rvPopularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                Log.d("ONSCROLLED","$dx")
-                Log.d("ONSCROLLED","$dy")
-               if (dy > 0) {
-                    val visibleItemCount = manager.childCount
-                    val pastVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
-                    val totalItemCount = adapter.itemCount
-                   if (!isLoading){
-                       if (visibleItemCount + pastVisibleItem >= totalItemCount ) {
-                           isLoading = true
-                          val res =  paging.getPage()
-                           adapter.submitList((items).plus(res))
-                       }
-                   }
-               }
-            }
+                Log.d("ONSCROLLED","dx $dx")
+                Log.d("ONSCROLLED"," dy $dy")
+           //     if (dy > 0) {
+//                    val position = manager.findLastVisibleItemPosition()
+//                    val visibleItemCount = manager.childCount
+//                    val pastVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
+//                    val totalItemCount = adapter.itemCount
+//                    if (!isLoading){
+//                        if (visibleItemCount + pastVisibleItem >= totalItemCount ) {
+//                            isLoading = true
+//                            val movies =  paging.getPage()
+//                            adapter.addItems(items,movies)
+//                            adapter.notifyDataSetChanged()
+//                        }
+//                    }
+                }
+
+        //    }
         })
     }
 }
+

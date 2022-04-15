@@ -21,8 +21,8 @@ class TopRatingMovieViewHolder(private val binding: ViewholderHorizontalBinding)
         snapHelper.attachToRecyclerView(rvTopRatingMovie)
         rvTopRatingMovie.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                Log.d("ONSCROLLE","$dx")
-                Log.d("ONSCROLLE","$dy")
+                Log.d("ONSCROLLE","dx $dx")
+                Log.d("ONSCROLLE","dy $dy")
                 super.onScrolled(recyclerView, dx, dy)
             }
         })

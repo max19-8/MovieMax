@@ -26,16 +26,16 @@ import javax.inject.Inject
 
 class ListMovieFragment : MvpAppCompatFragment(), ListView {
      var page = 1
+    private var isLoading = false
     private val binding:FragmentListMovieBinding by viewBinding(CreateMethod.INFLATE)
   private  val dataAdapter = DataAdapter(object :DataAdapter.Retry{
         override fun tryAgain() {
             presenter.getPopularsAndTopRatingMovies(page)
         }
     },object : Paging{
-      override fun getPage():List<Movie> {
-          ++page
-      val res =  presenter.getPaging(page)
-         return res
+      override fun getPage() {
+//          ++page
+//       presenter.getPopularsAndTopRatingMovies(page)
       }
   })
 
@@ -60,20 +60,30 @@ class ListMovieFragment : MvpAppCompatFragment(), ListView {
 
     override fun setBaseRecyclerView(list: List<DataModel>) {
          with(binding){
-             baseRecyclerView.layoutManager =LinearLayoutManager(requireContext(),  LinearLayoutManager.VERTICAL, false)
+             val manager = LinearLayoutManager(requireContext(),  LinearLayoutManager.VERTICAL, false)
+             baseRecyclerView.layoutManager = manager
              baseRecyclerView.adapter = dataAdapter
              dataAdapter.addData(list)
+             isLoading = false
              Log.d("setBaseRecyclerView","$list")
              baseRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                  override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                     Log.d("baseRecyclerView","$dx")
-                     Log.d("baseRecyclerView","$dy")
-                     super.onScrolled(recyclerView, dx, dy)
+                     Log.d("baseRecyclerView","dx $dx")
+                     Log.d("baseRecyclerView","dy $dy")
+                     if (dy > 0) {
+                         val visibleItemCount = manager.childCount
+                         val pastVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
+                         val total = dataAdapter.itemCount
+                             if (!isLoading && visibleItemCount + pastVisibleItem >= total ) {
+                                 page++
+                                 isLoading = true
+                                 presenter.getPopularsAndTopRatingMovies(page)
+                         }
+                     }
                  }
              })
          }
     }
-
     override fun addContentToToolbar(item: Result) {
                  binding.appbar.isVisible = true
            with(binding){
@@ -81,6 +91,4 @@ class ListMovieFragment : MvpAppCompatFragment(), ListView {
                movieName.text = item.name
            }
     }
-
-
 }

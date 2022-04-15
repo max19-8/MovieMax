@@ -10,6 +10,7 @@ import com.example.moviemax.model.entity.toMovie
 import com.example.moviemax.model.repository.ListMoviesRepository
 import com.example.moviemax.utils.ErrorType
 import com.example.moviemax.view.listview.ListView
+import com.example.moviemax.view.listview.Movie
 import com.example.moviemax.view.provider.ResourceProvider
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,9 +24,11 @@ class ListMoviePresenterImpl(
 ) : MvpPresenter<ListView>(), ListMoviePresenter {
 
     private var disposable: Disposable? = null
+    private val spisok = mutableListOf<Movie>()
 
     override fun getPopularsAndTopRatingMovies(page:Int) {
-        viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
+        val res = arrayListOf<Movie>()
+     //   viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
         disposable = Observable.zip<Model, Model, Pair<Model, Model>>(
             listMoviesRepository.getTopRatingMovies(),
             listMoviesRepository.getPopularMovie(page)
@@ -34,15 +37,18 @@ class ListMoviePresenterImpl(
             .observeOn(AndroidSchedulers.mainThread())
             .map { (topRating, mostPopular) -> Pair(topRating, mostPopular) }
             .subscribe({
+                res.addAll(it.second.results.toMovie())
                 viewState.addContentToToolbar(it.second.results.first())
                 viewState.setBaseRecyclerView(
                     listOf(
                         DataModel.HEADER((resourceProvider.getString(R.string.top_rating_text_view_text))),
                         DataModel.HorizontalItems(it.first.results.toMovie()),
                         DataModel.HEADER((resourceProvider.getString(R.string.popular_text_view_text))),
-                        DataModel.VerticalItems((it.second.results.toMovie()))
+                        DataModel.VerticalItems(spisok.plus(it.second.results.toMovie()))
                     )
                 )
+                spisok.addAll(it.second.results.toMovie())
+
             }, { error ->
                 val message = when (DataModel.Error(error.toString()).map(error)) {
                     ErrorType.NO_CONNECTION -> resourceProvider.getString(R.string.no_internet_connection_text)
@@ -53,9 +59,9 @@ class ListMoviePresenterImpl(
                 Log.d("getTopRatingMovies", "$error")
             })
     }
-
-    fun getPaging(page:Int){
-        viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
+     fun gt(page:Int) {
+        val res = arrayListOf<Movie>()
+        //   viewState.setBaseRecyclerView(listOf(DataModel.Shimmer))
         disposable = Observable.zip<Model, Model, Pair<Model, Model>>(
             listMoviesRepository.getTopRatingMovies(),
             listMoviesRepository.getPopularMovie(page)
@@ -64,13 +70,14 @@ class ListMoviePresenterImpl(
             .observeOn(AndroidSchedulers.mainThread())
             .map { (topRating, mostPopular) -> Pair(topRating, mostPopular) }
             .subscribe({
+                res.addAll(it.second.results.toMovie())
                 viewState.addContentToToolbar(it.second.results.first())
                 viewState.setBaseRecyclerView(
                     listOf(
                         DataModel.HEADER((resourceProvider.getString(R.string.top_rating_text_view_text))),
                         DataModel.HorizontalItems(it.first.results.toMovie()),
                         DataModel.HEADER((resourceProvider.getString(R.string.popular_text_view_text))),
-                        DataModel.VerticalItems(it.second.results.toMovie())
+                        DataModel.VerticalItems(spisok.plus(it.second.results.toMovie()))
                     )
                 )
             }, { error ->

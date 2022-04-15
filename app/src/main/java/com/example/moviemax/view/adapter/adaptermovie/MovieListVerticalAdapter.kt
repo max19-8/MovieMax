@@ -11,6 +11,8 @@ import com.example.moviemax.view.listview.Movie
 
 class MovieListVerticalAdapter : ListAdapter<Movie, BaseMoviesHolder>(BaseDiffCallbackItemMovie()) {
 
+    private var list = mutableListOf<Movie>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseMoviesHolder {
         val inflater = LayoutInflater.from(parent.context)
                 val binding = MovieItemBinding.inflate(inflater, parent, false)
@@ -32,4 +34,9 @@ class MovieListVerticalAdapter : ListAdapter<Movie, BaseMoviesHolder>(BaseDiffCa
         }
     }
 
+    fun addItems(items: List<Movie>,movies:List<Movie>){
+        list.addAll(items)
+        list.plus(movies)
+        notifyDataSetChanged()
+    }
 }
